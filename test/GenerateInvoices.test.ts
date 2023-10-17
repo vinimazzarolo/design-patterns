@@ -1,7 +1,34 @@
+import ContractRepository from "../src/ContractRepository";
 import GenerateInvoices from "../src/GenerateInvoices";
 
+let generateInvoices: GenerateInvoices;
+
+beforeEach(async function() {
+    const contractRepository: ContractRepository = {
+        async list(): Promise<any> {
+            return [
+                {
+                    idContract: "",
+                    description: "",
+                    periods: 12,
+                    amount: "6000",
+                    date: new Date("2023-01-01T10:00:00"),
+                    payments: [
+                        {
+                            idPayment: "",
+                            idContract: "",
+                            amount: "6000",
+                            date: new Date("2023-01-05T10:00:00")
+                        }
+                    ]
+                }
+            ]
+        },
+    };
+    generateInvoices = new GenerateInvoices(contractRepository);
+});
+
 test("deve gerar as notas fiscais por regime de caixa", async function() {
-    const generateInvoices = new GenerateInvoices();
     const input = {
         month: 1,
         year: 2023,
@@ -13,7 +40,6 @@ test("deve gerar as notas fiscais por regime de caixa", async function() {
 });
 
 test("deve gerar as notas fiscais por regime de competência", async function() {
-    const generateInvoices = new GenerateInvoices();
     const input = {
         month: 1,
         year: 2023,
@@ -25,7 +51,6 @@ test("deve gerar as notas fiscais por regime de competência", async function() 
 });
 
 test("deve gerar as notas fiscais por regime de competência", async function() {
-    const generateInvoices = new GenerateInvoices();
     const input = {
         month: 2,
         year: 2023,
