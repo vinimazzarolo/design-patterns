@@ -1,9 +1,13 @@
-import ContractRepository from "../src/ContractRepository";
+import ContractDatabaseRepository from "../src/ContractDatabaseRepository";
+import DatabaseConnection from "../src/DatabaseConnection";
 import GenerateInvoices from "../src/GenerateInvoices";
+import PgPromiseAdapter from "../src/PgPromiseAdapter";
 
 let generateInvoices: GenerateInvoices;
+let connection: DatabaseConnection;
 
 beforeEach(async function() {
+    /*
     const contractRepository: ContractRepository = {
         async list(): Promise<any> {
             return [
@@ -25,6 +29,10 @@ beforeEach(async function() {
             ]
         },
     };
+    */
+    
+    connection = new PgPromiseAdapter();
+    const contractRepository = new ContractDatabaseRepository(connection);
     generateInvoices = new GenerateInvoices(contractRepository);
 });
 
@@ -59,4 +67,8 @@ test("deve gerar as notas fiscais por regime de competência", async function() 
     const output = await generateInvoices.execute(input);
     expect(output.at(0)?.date).toBe("2023-02-01");
     expect(output.at(0)?.amount).toBe(500);
+});
+
+afterEach(async() => {
+    connection.close();
 });
