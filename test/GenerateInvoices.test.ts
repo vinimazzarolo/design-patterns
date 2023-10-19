@@ -1,10 +1,13 @@
 import ContractDatabaseRepository from "../src/ContractDatabaseRepository";
+import ContractRepository from "../src/ContractRepository";
+import CsvPresenter from "../src/CsvPresenter";
 import DatabaseConnection from "../src/DatabaseConnection";
 import GenerateInvoices from "../src/GenerateInvoices";
 import PgPromiseAdapter from "../src/PgPromiseAdapter";
 
 let generateInvoices: GenerateInvoices;
 let connection: DatabaseConnection;
+let contractRepository: ContractRepository;
 
 beforeEach(async function() {
     /*
@@ -32,7 +35,7 @@ beforeEach(async function() {
     */
     
     connection = new PgPromiseAdapter();
-    const contractRepository = new ContractDatabaseRepository(connection);
+    contractRepository = new ContractDatabaseRepository(connection);
     generateInvoices = new GenerateInvoices(contractRepository);
 });
 
@@ -43,7 +46,7 @@ test("deve gerar as notas fiscais por regime de caixa", async function() {
         type: "cash"
     };
     const output = await generateInvoices.execute(input);
-    expect(output.at(0)?.date).toBe("2023-01-05");
+    expect(output.at(0)?.date).toEqual(new Date("2023-01-05T13:00:00.000Z"));
     expect(output.at(0)?.amount).toBe(6000);
 });
 
@@ -54,7 +57,7 @@ test("deve gerar as notas fiscais por regime de competência", async function() 
         type: "accrual"
     };
     const output = await generateInvoices.execute(input);
-    expect(output.at(0)?.date).toBe("2023-01-01");
+    expect(output.at(0)?.date).toEqual(new Date("2023-01-01T13:00:00.000Z"));
     expect(output.at(0)?.amount).toBe(500);
 });
 
@@ -65,8 +68,20 @@ test("deve gerar as notas fiscais por regime de competência", async function() 
         type: "accrual"
     };
     const output = await generateInvoices.execute(input);
-    expect(output.at(0)?.date).toBe("2023-02-01");
+    expect(output.at(0)?.date).toEqual(new Date("2023-02-01T13:00:00.000Z"));
     expect(output.at(0)?.amount).toBe(500);
+});
+
+test("deve gerar as notas fiscais por regime de competência por CSV", async function() {
+    const input = {
+        month: 1,
+        year: 2023,
+        type: "accrual"
+    };
+    const presenter = new CsvPresenter();
+    const generateInvoices = new GenerateInvoices(new ContractDatabaseRepository(connection), presenter);
+    const output = await generateInvoices.execute(input);
+    expect(output).toBe("2023-01-01;500");
 });
 
 afterEach(async() => {
