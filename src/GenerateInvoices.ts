@@ -1,6 +1,4 @@
-import pgp from "pg-promise";
 import moment from "moment";
-import ContractDatabaseRepository from "./ContractDatabaseRepository";
 import ContractRepository from "./ContractRepository";
 
 export default class GenerateInvoices {
