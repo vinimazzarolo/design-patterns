@@ -3,7 +3,7 @@ This repository contains simple and practical examples that we can apply in our 
 
 Some of patterns implemented:
 - **Data Transfer Object (DTO)**: Transition data between layers.
-- **Repository**: Isolates the data layer from the rest of the app. It provides an abstraction of data, so that your application can work with a simple abstraction that has an interface approximating that of a collection. Adding, removing, updating, and selecting items from this collection is done through a series of straightforward methods, without the need to deal with database concerns like connections, commands, cursors, or readers. Using this pattern can help achieve loose coupling and can keep domain objects persistence ignorant
+- **Repository**: Isolates the data layer from the rest of the app. It provides an abstraction of data.Adding, removing, updating, and selecting items from this collection is done through a series of straightforward methods, without the need to deal with database concerns like connections, commands, cursors, or readers.
 - **Adapter**: Allows objects with incompatible interfaces to collaborate.
 - **Entities**: An entity has semantic significance and is usually tied to a concept linked to business logic.
 - **Strategory**: Strategy is a behavioral design pattern that lets you define a family of algorithms, put each of them into a separate class, and make their objects interchangeable
