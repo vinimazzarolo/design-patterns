@@ -1,4 +1,4 @@
-import Usecase from "./Usecase";
+import Usecase from "../usecase/Usecase";
 
 export default class LoggerDecorator implements Usecase {
     constructor(readonly usecase: Usecase) {}

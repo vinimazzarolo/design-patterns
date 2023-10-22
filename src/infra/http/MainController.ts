@@ -1,5 +1,5 @@
 import HttpServer from "./HttpServer";
-import Usecase from "./Usecase";
+import Usecase from "../../application/usecase/Usecase";
 
 export default class MainController {
     constructor(readonly httpServer: HttpServer, readonly usecase: Usecase) {
