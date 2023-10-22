@@ -1,5 +1,5 @@
 # Design Patterns
-This repository contains simple and practical examples that we can apply in our daily work.
+This repository contains simple and practical examples that we can apply in our daily work. You can see project business rules and use-cases on `test` folder.
 
 Some of patterns implemented:
 - **Data Transfer Object (DTO)**: Transition data between layers.
@@ -15,5 +15,11 @@ Some of patterns implemented:
 - **Composition Root**: The application entrypoint.
 
 Additionally, this repository contains a well-organized folder structure commonly seen in projects that adhere to TDD, DDD, and Clean Architecture principles.
+
+### How to run
+1. `npm install`
+2. `docker compose up`
+3. `npx nodemon src/main.ts`
+4. `npx jest` for testing.
 
 Thanks to [Rodrigo Branas](https://branas.io/) and [Full Cycle](https://fullcycle.com.br/) for the class.
